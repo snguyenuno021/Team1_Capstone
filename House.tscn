@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgm4aci51rurs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s4ea7"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_exqul"]
+size = Vector3(10, 1, 10)
+
+[node name="House" type="Node"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00625467, -1.19209e-07, -0.0034461)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_s4ea7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_exqul")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Node3D" type="Node3D" parent="CharacterBody3D"]
