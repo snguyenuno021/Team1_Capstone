@@ -78,8 +78,8 @@ func extrude(points, ext_height):
 		bottom_points.append(Vector3(p.x, 0, p.y))
 	for i in range(0, tris.size(), 3):
 		surface_tool.add_vertex(bottom_points[tris[i]])
-		surface_tool.add_vertex(bottom_points[tris[i + 2]])
 		surface_tool.add_vertex(bottom_points[tris[i + 1]])
+		surface_tool.add_vertex(bottom_points[tris[i + 2]])
 	
 	surface_tool.generate_normals()
 	return surface_tool.commit()
