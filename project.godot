@@ -11,12 +11,8 @@ config_version=5
 [application]
 
 config/name="Qli"
-<<<<<<< HEAD
-config/features=PackedStringArray("4.3")
-=======
 run/main_scene="uid://bgm4aci51rurs"
 config/features=PackedStringArray("4.4")
->>>>>>> b751653 (Fixed UI)
 config/icon="res://icon.png"
 
 [gui]
