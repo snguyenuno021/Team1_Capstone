@@ -1,48 +1,58 @@
 extends Control
 
-# Define a signal to pass the processed side lengths to the backend.
+# Signal to send side lengths to backend
 signal sides_input(side_lengths)
 
-# Node references.
-@onready var side_input: TextEdit = $SideInputTextEdit
+# Main UI nodes
 @onready var submit_button: Button = $SubmitButton
 @onready var output_label: Label = $OutputLabel
 
+# Popup UI nodes
+@onready var input_popup: Window = $InputPopup
+@onready var side_input: TextEdit = $InputPopup/VBoxContainer/SideInputTextEdit
+@onready var ok_button: Button = $InputPopup/VBoxContainer/OkButton
+
 func _ready():
-	# Connect the button's pressed signal to our handler.
-	submit_button.pressed.connect(_on_submit_pressed)
+	# Connect buttons
+	submit_button.pressed.connect(_on_submit_button_pressed)
+	ok_button.pressed.connect(_on_ok_button_pressed)
+	input_popup.close_requested.connect(_on_input_popup_close_requested)
 
-func _on_submit_pressed():
-	# Retrieve raw text input (batch input of side lengths).
+	# Ensure popup starts hidden
+	input_popup.hide()
+
+func _on_submit_button_pressed():
+	# Clear previous input and show popup
+	side_input.text = ""
+	input_popup.popup_centered()
+
+func _on_ok_button_pressed():
 	var raw_text: String = side_input.text
+	raw_text = raw_text.replace("\r", "")  # Normalize for Windows line endings
 
-	# Process the raw input: convert the text into an array of side lengths.
 	var side_lengths: Array = _parse_side_lengths(raw_text)
-	
-	# Display a message indicating the input was received.
-	output_label.text = "Input received: " + str(side_lengths)
-	
-	# Emit the signal with the side lengths.
-	emit_signal("sides_input", side_lengths)
-	
-	# (Optionally, print the input to console for debugging.)
-	print("Frontend collected side lengths: ", side_lengths)
 
-# Helper function to parse a string of side lengths.
+	output_label.text = "Input received: " + str(side_lengths)
+	emit_signal("sides_input", side_lengths)
+
+	input_popup.hide()  # Hide popup after confirming
+
+func _on_input_popup_close_requested():
+	input_popup.hide()  # Handle clicking the "X" in the popup title bar
+
 func _parse_side_lengths(input_text: String) -> Array:
 	var side_values = []
-	# First, split the input by newline (to handle one value per line).
-	var lines: Array = input_text.split("\n", true)
+	var lines = input_text.split("\n")
+
 	for line in lines:
 		line = line.strip_edges()
 		if line != "":
-			# Further split by commas if present.
 			if line.find(",") != -1:
-				var tokens: Array = line.split(",", true)
-				for token in tokens:
+				for token in line.split(","):
 					token = token.strip_edges()
-					if token != "":
+					if token.is_valid_float():
 						side_values.append(float(token))
-			else:
+			elif line.is_valid_float():
 				side_values.append(float(line))
+
 	return side_values
