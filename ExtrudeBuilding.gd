@@ -1,18 +1,5 @@
 extends MeshInstance3D
 
-# # This will be input by the user through the UI.
-# # Hardcoded for now.
-# var corners = [
-#	 Vector2(0, 0),
-#	 Vector2(10, 0),
-#	 Vector2(10, 10),
-#	 Vector2(8, 10),
-#	 Vector2(8, 5),
-#	 Vector2(5, 5),
-#	 Vector2(5, 10),
-#	 Vector2(0, 10),
-# ]
-
 var room_height = 5.0
 
 func _ready():
@@ -109,4 +96,3 @@ func extrude(points, ext_height):
 	
 	surface_tool.generate_normals()
 	return surface_tool.commit()
-
