@@ -1,31 +1,32 @@
 extends MeshInstance3D
 
-# This will be input by the user through the UI.
-# Hardcoded for now.
-var corners = [
-	Vector2(0, 0),
-	Vector2(10, 0),
-	Vector2(10, 10),
-	Vector2(8, 10),
-	Vector2(8, 5),
-	Vector2(5, 5),
-	Vector2(5, 10),
-	Vector2(0, 10),
-]
+# # This will be input by the user through the UI.
+# # Hardcoded for now.
+# var corners = [
+#	 Vector2(0, 0),
+#	 Vector2(10, 0),
+#	 Vector2(10, 10),
+#	 Vector2(8, 10),
+#	 Vector2(8, 5),
+#	 Vector2(5, 5),
+#	 Vector2(5, 10),
+#	 Vector2(0, 10),
+# ]
 
 var room_height = 5.0
 
 func _ready():
-	var gen_mesh = extrude(corners, room_height)
-	self.mesh = gen_mesh
-	
-	var mat = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.8, 0.4, 0.4)
-	# Temporarily disable culling if faces appear reversed:
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	mesh.surface_set_material(0, mat)
-	
-	# Add camera
+        # Connect to UI
+        var ui_node = get_node_or_null("/root/Node/UI") # TODO: Adjust to reference UI node.
+	if ui_node:
+		ui_node.connect("sides_input", self, "_on_sides_input")
+	else:
+		print("UI node not found. Please check the node path.")
+
+        _visualize()
+
+func _visualize():
+        # Add camera
 	var cam = Camera3D.new()
 	cam.position = Vector3(15, 10, 20)
 	cam.look_at_from_position(cam.position, Vector3(5, 2.5, 5), Vector3.UP)
@@ -36,6 +37,31 @@ func _ready():
 	var light = DirectionalLight3D.new()
 	light.rotation = Vector3(deg_to_rad(-45), deg_to_rad(45), 0)
 	call_deferred("add_child", light)
+
+func _on_sides_input(side_lengths):
+	if side_lengths.size() < 2:
+		print("Need both length and width.")
+		return
+	
+	var length = side_lengths[0]
+	var width = side_lengths[1]
+
+	var corners = [
+		Vector2(0, 0),
+		Vector2(length, 0),
+		Vector2(length, width),
+		Vector2(0, width),
+	]
+
+	var gen_mesh = extrude(corners, room_height)
+	self.mesh = gen_mesh
+
+	# Add material for visibility
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(0.8, 0.4, 0.4)
+        # Temporarily disable culling if faces appear reversed:
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mesh.surface_set_material(0, mat)
 
 # Creates side walls and top/bottom caps
 func extrude(points, ext_height):
@@ -83,3 +109,4 @@ func extrude(points, ext_height):
 	
 	surface_tool.generate_normals()
 	return surface_tool.commit()
+
