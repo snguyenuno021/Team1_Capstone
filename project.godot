@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="Qli"
-run/main_scene="uid://bgm4aci51rurs"
-config/features=PackedStringArray("4.4")
+run/main_scene="res://House.tscn"
+config/features=PackedStringArray("4.3")
 config/icon="res://icon.png"
 
 [gui]

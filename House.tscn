@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://bgm4aci51rurs"]
 
-[ext_resource type="Script" uid="uid://cfval3hml1fw7" path="res://ExtrudeBuilding.gd" id="1_wwt5c"]
-[ext_resource type="Script" uid="uid://davbv1g4tsm7a" path="res://UI Godot.gd" id="1_xm50o"]
+[ext_resource type="Script" path="res://ExtrudeBuilding.gd" id="1_wwt5c"]
+[ext_resource type="Script" path="res://UI Godot.gd" id="1_xm50o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s4ea7"]
 size = Vector3(10, 1, 10)
 
 [sub_resource type="BoxMesh" id="BoxMesh_exqul"]
-size = Vector3(10, 1, 10)
+size = Vector3(0, 0, 0)
 
 [node name="House" type="Node"]
 
@@ -15,7 +15,6 @@ size = Vector3(10, 1, 10)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00625467, -1.19209e-07, -0.0034461)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-visible = false
 shape = SubResource("BoxShape3D_s4ea7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]

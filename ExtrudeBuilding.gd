@@ -3,17 +3,17 @@ extends MeshInstance3D
 var room_height = 5.0
 
 func _ready():
-        # Connect to UI
-        var ui_node = get_node_or_null("/root/Node/UI") # TODO: Adjust to reference UI node.
+	# Connect to UI
+	var ui_node = get_node_or_null("../../Control")
 	if ui_node:
-		ui_node.connect("sides_input", self, "_on_sides_input")
+		ui_node.connect("sides_input", _on_sides_input)
 	else:
 		print("UI node not found. Please check the node path.")
 
-        _visualize()
+	_visualize()
 
 func _visualize():
-        # Add camera
+	# Add camera
 	var cam = Camera3D.new()
 	cam.position = Vector3(15, 10, 20)
 	cam.look_at_from_position(cam.position, Vector3(5, 2.5, 5), Vector3.UP)
@@ -29,7 +29,7 @@ func _on_sides_input(side_lengths):
 	if side_lengths.size() < 2:
 		print("Need both length and width.")
 		return
-	
+		
 	var length = side_lengths[0]
 	var width = side_lengths[1]
 
@@ -46,7 +46,7 @@ func _on_sides_input(side_lengths):
 	# Add material for visibility
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = Color(0.8, 0.4, 0.4)
-        # Temporarily disable culling if faces appear reversed:
+	# Temporarily disable culling if faces appear reversed:
 	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	mesh.surface_set_material(0, mat)
 
@@ -79,16 +79,18 @@ func extrude(points, ext_height):
 	var top_points = []
 	for p in points:
 		top_points.append(Vector3(p.x, ext_height, p.y))
+	
 	var tris = Geometry2D.triangulate_polygon(points)
 	for i in range(0, tris.size(), 3):
 		surface_tool.add_vertex(top_points[tris[i]])
 		surface_tool.add_vertex(top_points[tris[i + 1]])
 		surface_tool.add_vertex(top_points[tris[i + 2]])
-	
+		
 	# Bottom cap
 	var bottom_points = []
 	for p in points:
 		bottom_points.append(Vector3(p.x, 0, p.y))
+	
 	for i in range(0, tris.size(), 3):
 		surface_tool.add_vertex(bottom_points[tris[i]])
 		surface_tool.add_vertex(bottom_points[tris[i + 1]])
