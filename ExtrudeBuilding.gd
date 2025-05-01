@@ -1,4 +1,6 @@
 extends MeshInstance3D
+class_name ExtrudeBuilding
+
 
 var room_height = 5.0
 
