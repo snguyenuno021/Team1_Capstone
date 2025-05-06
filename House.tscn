@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bgm4aci51rurs"]
 
-[ext_resource type="Script" path="res://ExtrudeBuilding.gd" id="1_wwt5c"]
-[ext_resource type="Script" path="res://UI Godot.gd" id="1_xm50o"]
+[ext_resource type="Script" uid="uid://cfval3hml1fw7" path="res://ExtrudeBuilding.gd" id="1_wwt5c"]
+[ext_resource type="Script" uid="uid://davbv1g4tsm7a" path="res://UI Godot.gd" id="1_xm50o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s4ea7"]
 size = Vector3(10, 1, 10)

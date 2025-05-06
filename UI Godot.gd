@@ -12,7 +12,10 @@ signal sides_input(side_lengths)
 @onready var side_input: TextEdit = $InputPopup/VBoxContainer/SideInputTextEdit
 @onready var ok_button: Button = $InputPopup/VBoxContainer/OkButton
 
+var fdb: FurnitureDB
+
 func _ready():
+	fdb = FurnitureDB.new()
 	# Connect buttons
 	submit_button.pressed.connect(_on_submit_button_pressed)
 	ok_button.pressed.connect(_on_ok_button_pressed)
@@ -36,19 +39,19 @@ func _on_ok_button_pressed():
 	emit_signal("sides_input", side_lengths)
 
 	input_popup.hide()  # Hide popup after confirming
- if side_lengths.size() >= 2:
-        var length = side_lengths[0]
-        var width  = side_lengths[1]
-        # use your fixed room_height or pull it from your extruder:
-        var height = 5.0
-        FurnitureDB.add_furniture(
-            "Room",      # a name
-            length,      # width
-            width,       # depth
-            height,      # height
-            "room",      # type
-            "res://House.tscn"  # scene or identifier
-        )
+	if side_lengths.size() >= 2:
+		var length = side_lengths[0]
+		var width  = side_lengths[1]
+		# use your fixed room_height or pull it from your extruder:
+		var height = 5.0
+		fdb.add_furniture(
+			"Room",      # a name
+			length,      # width
+			width,       # depth
+			height,      # height
+			"room",      # type
+			"res://House.tscn"  # scene or identifier
+		)
 
 func _on_input_popup_close_requested():
 	input_popup.hide()  # Handle clicking the "X" in the popup title bar
