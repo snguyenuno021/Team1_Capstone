@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgm4aci51rurs"]
+
+[ext_resource type="Script" uid="uid://cfval3hml1fw7" path="res://ExtrudeBuilding.gd" id="1_wwt5c"]
+[ext_resource type="Script" uid="uid://davbv1g4tsm7a" path="res://UI Godot.gd" id="1_xm50o"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s4ea7"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_exqul"]
+size = Vector3(0, 0, 0)
+
+[sub_resource type="Environment" id="Environment_wwt5c"]
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 16.0
+
+[node name="House" type="Node"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00625467, -1.19209e-07, -0.0034461)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_s4ea7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.851642, -0.975804, -1.44412)
+mesh = SubResource("BoxMesh_exqul")
+script = ExtResource("1_wwt5c")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_xm50o")
+
+[node name="SubmitButton" type="Button" parent="Control"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 0
+offset_left = 446.0
+offset_top = 6.0
+offset_right = 630.0
+offset_bottom = 156.0
+text = "Enter Measurements"
+
+[node name="OutputLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="InputPopup" type="Window" parent="Control"]
+size = Vector2i(400, 300)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/InputPopup"]
+custom_minimum_size = Vector2(300, 300)
+offset_left = 57.0
+offset_top = 30.0
+offset_right = 357.0
+offset_bottom = 330.0
+
+[node name="SideInputTextEdit" type="TextEdit" parent="Control/InputPopup/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "
+"
+
+[node name="OkButton" type="Button" parent="Control/InputPopup/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+text = "Submit Measurements"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wwt5c")
