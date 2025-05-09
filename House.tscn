@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgm4aci51rurs"]
+[gd_scene load_steps=6 format=3 uid="uid://bgm4aci51rurs"]
 
 [ext_resource type="Script" uid="uid://cfval3hml1fw7" path="res://ExtrudeBuilding.gd" id="1_wwt5c"]
 [ext_resource type="Script" uid="uid://davbv1g4tsm7a" path="res://UI Godot.gd" id="1_xm50o"]
@@ -8,6 +8,10 @@ size = Vector3(10, 1, 10)
 
 [sub_resource type="BoxMesh" id="BoxMesh_exqul"]
 size = Vector3(0, 0, 0)
+
+[sub_resource type="Environment" id="Environment_wwt5c"]
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 16.0
 
 [node name="House" type="Node"]
 
@@ -21,13 +25,6 @@ shape = SubResource("BoxShape3D_s4ea7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.851642, -0.975804, -1.44412)
 mesh = SubResource("BoxMesh_exqul")
 script = ExtResource("1_wwt5c")
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-visible = false
-
-[node name="Node3D" type="Node3D" parent="CharacterBody3D"]
-visible = false
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -70,3 +67,6 @@ text = "
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 text = "Submit Measurements"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wwt5c")
