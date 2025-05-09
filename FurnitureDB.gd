@@ -4,9 +4,13 @@ class_name FurnitureDB
 var db: SQLite = SQLite.new()
 
 func _ready() -> void:
+	DirAccess.make_dir_recursive_absolute("user://")  # Ensure the directory exists
+	
 	# db = SQLite.new()
-	var err = db.open("user://furniture.db")
-	if err != OK:
+	db.path="user://furniture.db"
+	var err = db.open_db()
+	# var err = db.open("user://furniture.db")
+	if err == false:
 		push_error("Couldn’t open furniture.db: %s" % err)
 		return
 	_ensure_table()

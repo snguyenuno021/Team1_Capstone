@@ -16,6 +16,7 @@ var fdb: FurnitureDB
 
 func _ready():
 	fdb = FurnitureDB.new()
+	add_child(fdb)
 	# Connect buttons
 	submit_button.pressed.connect(_on_submit_button_pressed)
 	ok_button.pressed.connect(_on_ok_button_pressed)
