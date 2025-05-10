@@ -3,6 +3,10 @@
 ### Functions:  
 * \_ready()  
   
+* \_visualize()  
+  
+* \_on\_sides\_input(side\_lengths)  
+  
 * extrude(points, ext\_height)  
   
     ```
@@ -11,13 +15,6 @@
 
   
 ### Variables:  
-* corners = `[`  
-  
-    ```
-    This will be input by the user through the UI.
-    Hardcoded for now.
-    ```
-
 * room\_height = `5.0`  
   
   
