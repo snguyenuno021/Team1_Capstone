@@ -1,0 +1,16 @@
+extends res://addons/gut/tests/test_room_generator.gd
+
+func test_parse_dimensions_string():
+	# Given
+	var input = "4,5,3"
+	# When
+	var dims = RoomGenerator.parse_dimensions(input)
+	# Then
+	assert_eq_array(dims, [4.0, 5.0, 3.0])
+
+func test_mesh_vertex_count():
+	# Build a simple square [(0,0),(1,0),(1,1),(0,1)], height=2
+	var floor = [Vector2(0,0), Vector2(1,0), Vector2(1,1), Vector2(0,1)]
+	var mesh = MeshExtruder.extrude_mesh(floor, 2.0)
+	# A quad extrude should have 4 top vertices + 4 bottom = 8
+	assert_eq(mesh.get_surface(0).get_array(Mesh.ARRAY_VERTEX).size(), 8)
