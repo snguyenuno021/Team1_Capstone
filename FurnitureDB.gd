@@ -15,6 +15,19 @@ func _ready() -> void:
 		return
 	_ensure_table()
 
+func test_add_and_get_furniture():
+    var db_node = setup_clean_db()
+
+    db_node.add_furniture("Sofa", 2.0, 1.0, 1.5, "Seating", "res://scenes/sofa.tscn")
+    var results = db_node.get_all_furniture()
+
+    assert(results.size() == 1, "Expected one item in the DB")
+    var entry = results[0]
+    assert(entry["furn_name"] == "Sofa", "Expected name 'Sofa'")
+    assert(entry["width"] == 2.0, "Expected width 2.0")
+    assert(entry["scene_path"] == "res://scenes/sofa.tscn", "Expected correct scene path")
+
+
 func _ensure_table() -> void:
 	var sql = """
 	CREATE TABLE IF NOT EXISTS furniture (
